@@ -1,0 +1,16 @@
+CREATE TABLE member(
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    email TEXT NOT NULL,
+    name TEXT NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE UNIQUE INDEX member_email_lower_idx ON member(LOWER(email));
+
+CREATE TABLE session(
+    id TEXT PRIMARY KEY,
+    member INTEGER NOT NULL REFERENCES member(id) ON DELETE CASCADE,
+    expires_at TIMESTAMPTZ NOT NULL
+);
+

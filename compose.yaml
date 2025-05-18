@@ -1,0 +1,49 @@
+services:
+  db:
+    container_name: MY-postgres-db
+    image: postgres:17-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: MYdatabase
+      POSTGRES_USER: MYuser
+      POSTGRES_PASSWORD: MYpassword
+      PGDATABASE: MYdatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db_init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - MY-app-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: MY-pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: MY@example.com
+      PGADMIN_DEFAULT_PASSWORD: MYpw
+      PGADMIN_SERVER_JSON_FILE: /etc/pgadmin/servers.json
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./pgadmin:/etc/pgadmin
+    networks:
+      - MY-app-network
+
+volumes:
+  db_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  MY-app-network:
+    driver: bridge
