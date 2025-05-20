@@ -5,6 +5,7 @@ CREATE TABLE member(
     password_hash TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+ALTER TABLE member OWNER TO "MYuser";
 
 CREATE UNIQUE INDEX member_email_lower_idx ON member(LOWER(email));
 
@@ -13,4 +14,4 @@ CREATE TABLE session(
     member INTEGER NOT NULL REFERENCES member(id) ON DELETE CASCADE,
     expires_at TIMESTAMPTZ NOT NULL
 );
-
+ALTER TABLE session OWNER TO "MYuser";

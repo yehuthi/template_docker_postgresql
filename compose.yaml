@@ -5,9 +5,9 @@ services:
     restart: always
     environment:
       POSTGRES_DB: MYdatabase
-      POSTGRES_USER: MYuser
-      POSTGRES_PASSWORD: MYpassword
-      PGDATABASE: MYdatabase
+      POSTGRES_USER: MYadmin
+      POSTGRES_PASSWORD: MYadminpassword
+      PGDATABASE: postgres
     ports:
       - "5432:5432"
     volumes:
