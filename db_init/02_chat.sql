@@ -1,0 +1,14 @@
+CREATE TABLE "text_channel"(
+    "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "title" TEXT NOT NULL,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+ALTER TABLE "text_channel" OWNER TO "teder";
+
+CREATE TABLE "post"(
+    "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "user" INTEGER REFERENCES "user"(id),
+    "content" TEXT NOT NULL,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+ALTER TABLE "post" OWNER TO "teder";
