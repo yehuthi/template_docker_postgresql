@@ -1,13 +1,13 @@
 services:
   db:
-    container_name: MY-postgres-db
+    container_name: teder-postgres-db
     image: postgres:17-alpine
     restart: always
     secrets:
       - postgres_passwd
     environment:
-      POSTGRES_DB: MYdatabase
-      POSTGRES_USER: MYadmin
+      POSTGRES_DB: tederdatabase
+      POSTGRES_USER: tederadmin
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_passwd
       PGDATABASE: postgres
     ports:
@@ -22,16 +22,16 @@ services:
       retries: 5
       start_period: 30s
     networks:
-      - MY-app-network
+      - teder-app-network
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: MY-pgadmin
+    container_name: teder-pgadmin
     restart: always
     secrets:
       - pgadmin_passwd
     environment:
-      PGADMIN_DEFAULT_EMAIL: MY@email.com
+      PGADMIN_DEFAULT_EMAIL: teder@email.com
       PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/pgadmin_passwd
       PGADMIN_SERVER_JSON_FILE: /etc/pgadmin/servers.json
     ports:
@@ -40,7 +40,7 @@ services:
       - pgadmin_data:/var/lib/pgadmin
       - ./pgadmin:/etc/pgadmin
     networks:
-      - MY-app-network
+      - teder-app-network
 
 volumes:
   db_data:
@@ -49,7 +49,7 @@ volumes:
     driver: local
 
 networks:
-  MY-app-network:
+  teder-app-network:
     driver: bridge
 
 secrets:

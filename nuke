@@ -1,0 +1,3 @@
+#!/bin/bash
+docker compose rm --stop --force --volumes
+docker volume rm teder_db_db_data teder_db_pgadmin_data --force
